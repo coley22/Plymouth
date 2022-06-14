@@ -11,24 +11,27 @@ output.write(output_header)
 
 positive_count=0
 
-with open('HBEF_lapse_rates.csv', 'r') as infile:
+# change this to use new_histogram_data, if column 5 is greater than zero and has len greater than zero, keep that row
+# fuck it, going to use pandas
+with open('new_Histogram_Data.csv') as infile:
     reader = csv.reader(infile, delimiter=',')
     header = next(reader)
     print(header[1])
     for row in reader:
         value_length = len(row[1])
-        if value_length>0:
-            lapse_rate = float(row[1])
-            # print(value_length)
-            if lapse_rate<0:
-                # print(row[0], lapse_rate)
-                positive_count+=1
-                file_input = "{},{}\n".format(row[0],lapse_rate)
-                # going to write ALL the positive lapse rates to a file
-                # still must exclude data from above the 21 lowest sites
-                # still must exclude max observations from 3 lowest stations
-                output.write(file_input)
-output.close()
+        print(row)
+        # if value_length>0:
+        #     lapse_rate = float(row[1])
+        #     # print(value_length)
+        #     if lapse_rate<0:
+        #         # print(row[0], lapse_rate)
+        #         positive_count+=1
+#                 file_input = "{},{}\n".format(row[0],lapse_rate)
+#                 # going to write ALL the positive lapse rates to a file
+#                 # still must exclude data from above the 21 lowest sites
+#                 # still must exclude max observations from 3 lowest stations
+#                 output.write(file_input)
+# output.close()
 
 
 print("# of hours with positive lapse rate: ",positive_count)

@@ -1,5 +1,4 @@
 import csv
-
 import pandas
 
 rates=[]
@@ -16,4 +15,4 @@ with open('HBEF_lapse_rates.csv') as infile:
 df=pandas.read_csv('Histogram_Data.csv')
 df['lapseRate']=rates
 print(df)
-df.to_csv('new_Histogram_Data.csv', index=True)
+df.to_csv('new_Histogram_Data.csv', index=False)
