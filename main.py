@@ -21,7 +21,7 @@ with open('HBEF_lapse_rates.csv', 'r') as infile:
             lapse_rate = float(row[1])
             # print(value_length)
             if lapse_rate<0:
-                print(row[0], lapse_rate)
+                # print(row[0], lapse_rate)
                 positive_count+=1
                 file_input = "{},{}\n".format(row[0],lapse_rate)
                 # going to write ALL the positive lapse rates to a file
