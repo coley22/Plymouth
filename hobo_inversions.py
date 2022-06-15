@@ -49,12 +49,7 @@ with open('HOBO_Master_T.csv') as infile:
 output.close()
 
 
-# elevations=fin.iloc[0].to_numpy()
-# elevations = np.delete(elevations, [0])
-# print(elevations)
-# max_elev=elevations.max()
-# print("max elevation: ",max_elev)
-
+# kelsey's code
 fin = pd.read_csv('HOBO_Master_T.csv')
 fin1 = pd.read_csv('HOBO_Elevations.csv')
 

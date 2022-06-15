@@ -1,25 +1,49 @@
-# this script takes the lapse rate file and filters out the positive lapse rates and writes them to a new file
-
-import pandas as panda
+import pandas
 import numpy as np
 import matplotlib.pyplot as plot
 import csv
+from matplotlib.ticker import PercentFormatter
 
-output = open('positive_lapse_Rate.csv', 'w')
-output_header="Date,slope\n"
-output.write(output_header)
+# WE NEED THE LOWEST 21 LAPSE RATES, BUT ALL 40 MAX TEMPERATURES
+# so, if there was an inversion present at one of the lowest 21 loggers, we need the maxT for that hour, regardless of elevation
 
-positive_count=0
+data=pandas.read_csv('new_Histogram_Data.csv')
+data.drop(data.index[data['lapseRate']<0], inplace=True)
+data=data[data['lapseRate'].notna()]
+# dropping the lowest 3 sensors
+data.drop(data.index[data['elevation']<350], inplace=True)
+# at this point, we have a dataframe with all the hours with a positive lapse rate
+# going to attempt to remove rows of data with an elevation greater than 613m (WS1)
+# data.drop(data.index[data['elevation']>613], inplace=True)
+print(data)
+data.to_csv('filtered_LR.csv', index=False)
 
-# change this to use new_histogram_data, if column 5 is greater than zero and has len greater than zero, keep that row
-# fuck it, going to use pandas
-with open('new_Histogram_Data.csv') as infile:
-    reader = csv.reader(infile, delimiter=',')
-    header = next(reader)
-    print(header[1])
-    for row in reader:
-        value_length = len(row[1])
-        print(row)
+
+bins_data=pandas.read_csv('filtered_LR.csv')
+bins=[300,350,400,450,500,550,600,650,700,750,800,850,900]
+plot.hist(bins_data.elevation, weights=np.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
+plot.gca().yaxis.set_major_formatter(PercentFormatter(1))
+plot.xticks(bins)
+plot.xlabel('Elevation(m)')
+plot.ylabel('Percent(%)')
+plot.title('Frequency of Max Temperature Occurrence')
+plot.show()
+
+
+
+# output = open('positive_lapse_Rate.csv', 'w')
+# output_header="Date,slope\n"
+# output.write(output_header)
+#
+# positive_count=0
+#
+# with open('new_Histogram_Data.csv') as infile:
+#     reader = csv.reader(infile, delimiter=',')
+#     header = next(reader)
+#     print(header[1])
+#     for row in reader:
+#         value_length = len(row[1])
+#         print(row)
         # if value_length>0:
         #     lapse_rate = float(row[1])
         #     # print(value_length)
@@ -34,14 +58,10 @@ with open('new_Histogram_Data.csv') as infile:
 # output.close()
 
 
-print("# of hours with positive lapse rate: ",positive_count)
-print("hey")
+# print("# of hours with positive lapse rate: ",positive_count)
+# print("hey")
 # could modidfy hobo_inversions script to also give the max temperature
 # could make a script to edit the master T before running hobo_inversion to eliminate higher elevation sites
-
-
-
-
 
 
 
