@@ -1,5 +1,5 @@
 import pandas
-import numpy as np
+import numpy
 import matplotlib.pyplot as plot
 import csv
 from matplotlib.ticker import PercentFormatter
@@ -8,10 +8,11 @@ from matplotlib.ticker import PercentFormatter
 # so, if there was an inversion present at one of the lowest 21 loggers, we need the maxT for that hour, regardless of elevation
 
 data=pandas.read_csv('new_Histogram_Data.csv')
-data.drop(data.index[data['lapseRate']<0], inplace=True)
+data.drop(data.index[data['lapseRate']<=0], inplace=True)
 data=data[data['lapseRate'].notna()]
 # dropping the lowest 3 sensors
 data.drop(data.index[data['elevation']<350], inplace=True)
+
 # at this point, we have a dataframe with all the hours with a positive lapse rate
 # going to attempt to remove rows of data with an elevation greater than 613m (WS1)
 # data.drop(data.index[data['elevation']>613], inplace=True)
@@ -21,7 +22,7 @@ data.to_csv('filtered_LR.csv', index=False)
 
 bins_data=pandas.read_csv('filtered_LR.csv')
 bins=[300,350,400,450,500,550,600,650,700,750,800,850,900]
-plot.hist(bins_data.elevation, weights=np.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
+plot.hist(bins_data.elevation, weights=numpy.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
 plot.gca().yaxis.set_major_formatter(PercentFormatter(1))
 plot.xticks(bins)
 plot.xlabel('Elevation(m)')
@@ -56,22 +57,3 @@ plot.show()
 #                 # still must exclude max observations from 3 lowest stations
 #                 output.write(file_input)
 # output.close()
-
-
-# print("# of hours with positive lapse rate: ",positive_count)
-# print("hey")
-# could modidfy hobo_inversions script to also give the max temperature
-# could make a script to edit the master T before running hobo_inversion to eliminate higher elevation sites
-
-
-
-
-# data=panda.read_csv('HBEF_lapse_rates.csv')
-# print(data)
-# for hobo in data:
-#     if hobo == 'Temp005':
-#         plot.plot(data['Date'], data['Temp005'])
-
-        #code that picks out the positive slopes(?) and plots them based on elevation
-# plot.hist(data.slope)
-# plot.show()

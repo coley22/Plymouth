@@ -1,6 +1,8 @@
+# essentially combining the histogram data and the lapse rates into a new csv
 import csv
 import pandas
 
+# taking the lapse rates and copying them to an array
 rates=[]
 with open('HBEF_lapse_rates.csv') as infile:
     reader = csv.reader(infile)
@@ -12,6 +14,7 @@ with open('HBEF_lapse_rates.csv') as infile:
     rates.pop(0)
     print(rates[:4])
 
+# adding the lapse rates to a new column in 'Histogram_Data'
 df=pandas.read_csv('Histogram_Data.csv')
 df['lapseRate']=rates
 print(df)

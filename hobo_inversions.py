@@ -13,9 +13,10 @@ output=open('Histogram_Data.csv', 'w')
 output_header="Date,maxT,logger,elevation\n"
 output.write(output_header)
 
-# taking the loggers and their elevations and putting them into arrays with matching indices
+# cleaning up the data in 'HOBO_Master_T'
 with open('HOBO_Master_T.csv') as infile:
     reader = csv.reader(infile, delimiter=',')
+    # taking the loggers and their elevations and putting them into arrays with matching indices
     logger = next(reader)
     logger.pop(0)
     elevations = next(reader)
@@ -24,6 +25,7 @@ with open('HOBO_Master_T.csv') as infile:
     logger2 = logger.copy()
     elevations2 = elevations.copy()
 
+    # removing column headings (logger, elevation) if there is missing data
     for row in reader:
         date = row.pop(0)
         i=-1
@@ -34,10 +36,11 @@ with open('HOBO_Master_T.csv') as infile:
                 a=logger.pop(i)
                 b=elevations.pop(i)
                 i-=1
-
+        # casting the temperature values to floats
         row = list(map(float, row))
         # print(logger[15], elevations[15], row[15])
 
+        # finding the max temperature in each row and finding that index
         max_temp = max(row)
         max_temp_index = row.index(max_temp)
 
