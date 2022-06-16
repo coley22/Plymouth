@@ -51,15 +51,15 @@ print("dates identified: ",count)
 
 
 # histogram
-# bins_data=pandas.read_csv('filtered_LR.csv')
-# bins=[300,350,400,450,500,550,600,650,700,750,800,850,900]
-# plot.hist(bins_data.elevation, weights=numpy.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
-# plot.gca().yaxis.set_major_formatter(PercentFormatter(1))
-# plot.xticks(bins)
-# plot.xlabel('Elevation(m)')
-# plot.ylabel('Percent(%)')
-# plot.title('Frequency of Max Temperature Occurrence')
-# plot.show()
+bins_data=pandas.read_csv('filtered_LR.csv')
+bins=[300,350,400,450,500,550,600,650,700,750,800,850,900]
+plot.hist(bins_data.elevation, weights=numpy.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
+plot.gca().yaxis.set_major_formatter(PercentFormatter(1))
+plot.xticks(bins)
+plot.xlabel('Elevation(m)')
+plot.ylabel('Percent(%)')
+plot.title('Frequency of Max Temperature Occurrence')
+plot.show()
 
 
 
