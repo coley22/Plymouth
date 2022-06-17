@@ -15,7 +15,7 @@ df['Date']=pd.to_datetime(df['Date'])
 df2=df.set_index('Date').between_time('06:00:00','21:00:00')
 # df2.to_csv('jan_day.csv')
 
-#tre
+#tr
 # night
 df['Date']=pd.to_datetime(df['Date'])
 df3=df.set_index('Date').between_time('21:00:00','06:00:00')
