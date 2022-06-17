@@ -9,12 +9,12 @@ import csv
 from scipy import stats
 from scipy.optimize import minimize
 
-output=open('Histogram_Data.csv', 'w')
+output=open('csv/Histogram_Data.csv', 'w')
 output_header="Date,maxT,logger,elevation\n"
 output.write(output_header)
 
 # cleaning up the data in 'HOBO_Master_T'
-with open('HOBO_Master_T.csv') as infile:
+with open('csv/HOBO_Master_T.csv') as infile:
     reader = csv.reader(infile, delimiter=',')
     # taking the loggers and their elevations and putting them into arrays with matching indices
     logger = next(reader)
@@ -53,8 +53,8 @@ output.close()
 
 
 # kelsey's code
-fin = pd.read_csv('HOBO_Master_T.csv')
-fin1 = pd.read_csv('HOBO_Elevations.csv')
+fin = pd.read_csv('csv/HOBO_Master_T.csv')
+fin1 = pd.read_csv('csv/HOBO_Elevations.csv')
 
 fin.index = pd.to_datetime(fin.Date)
 fin = fin.drop(['Date'], axis=1)

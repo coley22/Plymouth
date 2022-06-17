@@ -22,14 +22,14 @@ from matplotlib.ticker import PercentFormatter
 # now what I will attempt to do is use the csv with the hours a positive inversion was present in the lowest 21
 #   loggers to find the maxT and elevation at that hour
 
-hours=pandas.read_csv('filtered_LR.csv')
+hours=pandas.read_csv('csv/filtered_LR.csv')
 dates_needed=hours.iloc[:,0] #works
 # print("dates needed:\n",dates_needed, "\n")
 dates_needed_list=dates_needed.tolist()
 
 print(dates_needed_list)
 
-bto=pandas.read_csv('HOBO_Master_T.csv')
+bto=pandas.read_csv('csv/HOBO_Master_T.csv')
 bto_dates=bto.iloc[:,0]    #grabbing the dates to compare with dates_needed
 bto_dates.drop(index=bto_dates.index[0], inplace=True)  #dropping NaN index
 # print("bto dates:\n",bto_dates,"\n")
@@ -51,7 +51,7 @@ print("dates identified: ",count)
 
 
 # histogram
-bins_data=pandas.read_csv('filtered_LR.csv')
+bins_data=pandas.read_csv('csv/filtered_LR.csv')
 bins=[300,350,400,450,500,550,600,650,700,750,800,850,900]
 plot.hist(bins_data.elevation, weights=numpy.ones(len(bins_data.elevation))/len(bins_data.elevation), bins=bins)
 plot.gca().yaxis.set_major_formatter(PercentFormatter(1))
