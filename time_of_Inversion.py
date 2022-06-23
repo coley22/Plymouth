@@ -1,15 +1,14 @@
 # finding the frequency of time inversions per hour per month
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plot
-df=pd.read_csv('csv/january.csv')
+df=pd.read_csv('csv/July/july.csv')
 a=df['slope'].values
 print('a: ',a)  # a is an array with all the slopes
 
 new_df=pd.DataFrame()
 inv_count=0
-i3, i2, i1, i0, i_1, i_2=0,0,0,0,0,0
-for i in range(0,len(a)):
+i3, i2, i1, i0, i_1, i_2=0, 0, 0, 0, 0, 0
+for i in range(0, len(a)):
     i0=a[i]
     if i==0 or i==1:
         i3, i2, i1 = a[0], a[0], a[0]
@@ -40,18 +39,17 @@ for i in range(0,len(a)):
 
 
 print('inversion count: ',inv_count)
-new_df.to_csv('january hours with an inversion ND')
-
 new_df['Date']=pd.to_datetime(new_df['Date'])
 new_df['Time']=new_df['Date'].dt.hour
-new_df.drop(new_df.index[new_df['slope']>0], inplace=True)  # dropping slopes with a positive/negative lapse rate
+# new_df.to_csv('csv/December/Dec hours with inversion.csv')
+# new_df.drop(new_df.index[new_df['slope']<0], inplace=True)  # dropping slopes with a positive/negative lapse rate
 print(new_df)
 
 # plotting frequency of all inversions in month by hour
-y=(new_df['Time'].value_counts()/len(new_df['Time']))
-y.sort_index(axis=0, ascending=True, inplace=True)  # **if an hour has 0 inversions, that hour is left off the x-axis**
-y.plot(kind='bar', color='orange')
-plot.title('Number of ** inversions by hour (January)')
-plot.xlabel('time')
-plot.ylabel('percentage of inversions')
-plot.show()
+# y=(new_df['Time'].value_counts()/len(new_df['Time']))
+# # y.sort_index(axis=0, ascending=True, inplace=True)  # **if an hour has 0 inversions, that hour is left off the x-axis**
+# y.plot(kind='bar', color='orange')
+# plot.title('Number of positive inversions by hour (December)')
+# plot.xlabel('time')
+# plot.ylabel('percentage of inversions')
+# plot.show()
