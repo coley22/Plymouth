@@ -29,7 +29,7 @@ mean=str(mean)
 mean_string='mean='+mean+'°C/km'
 print(mean_string)
 
-bins=range(-20,20)
+bins=range(-25,25)
 x=df3['slope']              # CHANGE AS GRAPH CHANGES
 plot.hist(x, weights=np.ones(len(x))/len(x), bins=bins)
 
