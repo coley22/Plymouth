@@ -23,7 +23,7 @@ for i in range(0, len(a)):  # running through the entire data set
     if not inversion:   # if there is not an inversion, check for one
         if i0>0 and i_1>0 and i_2>0:
             inv_count+=1
-            print('Inversion',inv_count,'started at:', df.iloc[i][0], df.iloc[i][1])
+            # print('Inversion',inv_count,'started at:', df.iloc[i][0], df.iloc[i][1])
             new_df=new_df._append(df.iloc[[i]])
             new_df.at[i,['invLen']]=0
             inv_length += 1
@@ -31,7 +31,7 @@ for i in range(0, len(a)):  # running through the entire data set
     elif inversion: # if there is an inversion, check to see if it will dissipate
         inv_length+=1
         if i_1<0 and i_2<0 and i_3<0:
-            print('Inversion ended at: ', df.iloc[i+1][0], df.iloc[i+1][1], '\n')
+            # print('Inversion ended at: ', df.iloc[i+1][0], df.iloc[i+1][1], '\n')
             new_df=new_df._append(df.iloc[[i+1]])
             new_df.at[i+1,['invLen']]=inv_length
             inv_length = 0
@@ -41,7 +41,7 @@ print('inversion count: ',inv_count)
 new_df['Date']=pd.to_datetime(new_df['Date'])
 new_df['Time']=new_df['Date'].dt.hour
 new_df['Month']=new_df['Date'].dt.month
-new_df.to_csv('csv/hours_with_inversion_master2.csv')    # a csv with all the hours with an inversion
+# new_df.to_csv('csv/hours_with_inversion_master2.csv')    # a csv with all the hours with an inversion
 print(new_df)
 
 # # code to filter the inversion hours by month
@@ -96,13 +96,13 @@ print(new_df)
 
 # altering the dataframe to grab the data we want, =>6 hour inversions during the cold season
 
-df=pd.read_csv('csv/hours_with_inversion_master2.csv')
-df.drop(df.index[df['Month']==5], inplace=True)
-df.drop(df.index[df['Month']==6], inplace=True)
-df.drop(df.index[df['Month']==7], inplace=True)
-df.drop(df.index[df['Month']==8], inplace=True)
-df.drop(df.index[df['Month']==9], inplace=True)
-df.drop(df.index[df['Month']==10], inplace=True)
-# df.drop(df.index[df['invLen']<6], inplace=True)
-df.to_csv('csv/cold_Season_invLen.csv')
-print(df)
+# df=pd.read_csv('csv/hours_with_inversion_master2.csv')
+# df.drop(df.index[df['Month']==5], inplace=True)
+# df.drop(df.index[df['Month']==6], inplace=True)
+# df.drop(df.index[df['Month']==7], inplace=True)
+# df.drop(df.index[df['Month']==8], inplace=True)
+# df.drop(df.index[df['Month']==9], inplace=True)
+# df.drop(df.index[df['Month']==10], inplace=True)
+# # df.drop(df.index[df['invLen']<6], inplace=True)
+# df.to_csv('csv/cold_Season_invLen.csv')
+# print(df)
