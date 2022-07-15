@@ -56,48 +56,34 @@ for i in range(0, len(a)):  # running through the entire data set
 df['Date'] = pd.to_datetime(df['Date'])
 df['Month'] = df['Date'].dt.month
 df.to_csv('df.csv')
-print("the dataframe: \n",df)
-
-
-
-
-# fixing start time having no values
-# throw invLen into a list, remove zeros
-# should always alternate
-# if invLen == Start
-    # while  invLen at the same index is zero
-        # iterate
-        #if invLen >0
-            # value should represent the invLen, store this variable and use it in ensuing if statement
-
-
-
-
-
 
 #for time series, locate the 6 hours before and after the inversion start/end, make new column for hours relative to inversion end time
 df5 = pd.DataFrame()
 df5['Hours from Start'] = ''
 idx =''
 for i in range(0, len(df)):
-    if df['Start/End'][i] == 'Start' and df['invLen'][i]>0:
-        idx = df.index.get_loc(i)
-        df5 = df5._append((df.iloc[idx - 6: idx + 7]))
-        df5['Hours from Start'][idx - 6] = -6
-        df5['Hours from Start'][idx - 5] = -5
-        df5['Hours from Start'][idx - 4] = -4
-        df5['Hours from Start'][idx - 3] = -3
-        df5['Hours from Start'][idx - 2] = -2
-        df5['Hours from Start'][idx - 1] = -1
-        df5['Hours from Start'][idx] = 0
-        df5['Hours from Start'][idx + 1] = 1
-        df5['Hours from Start'][idx + 2] = 2
-        df5['Hours from Start'][idx + 3] = 3
-        df5['Hours from Start'][idx + 4] = 4
-        df5['Hours from Start'][idx + 5] = 5
-        df5['Hours from Start'][idx + 6] = 6
+    if df['Start/End'][i] == 'Start':   # and df['invLen'][i]>0:
+        j=i
+        while df['invLen'][j]==0:
+            j+=1
+            inv_len=df['invLen'][j]
+        if inv_len>=6:
+            idx = df.index.get_loc(i)
+            df5 = df5._append((df.iloc[idx - 6: idx + 7]))
+            df5['Hours from Start'][idx - 6] = -6
+            df5['Hours from Start'][idx - 5] = -5
+            df5['Hours from Start'][idx - 4] = -4
+            df5['Hours from Start'][idx - 3] = -3
+            df5['Hours from Start'][idx - 2] = -2
+            df5['Hours from Start'][idx - 1] = -1
+            df5['Hours from Start'][idx] = 0
+            df5['Hours from Start'][idx + 1] = 1
+            df5['Hours from Start'][idx + 2] = 2
+            df5['Hours from Start'][idx + 3] = 3
+            df5['Hours from Start'][idx + 4] = 4
+            df5['Hours from Start'][idx + 5] = 5
+            df5['Hours from Start'][idx + 6] = 6
 
-# print("dataframe 5: \n",  df5)
 df5.drop(df5.index[df5['Month']==5], inplace=True)
 df5.drop(df5.index[df5['Month']==6], inplace=True)
 df5.drop(df5.index[df5['Month']==7], inplace=True)
@@ -105,11 +91,14 @@ df5.drop(df5.index[df5['Month']==8], inplace=True)
 df5.drop(df5.index[df5['Month']==9], inplace=True)
 df5.drop(df5.index[df5['Month']==10], inplace=True)
 
-# df5.to_csv('Cold_Inv_TimeSeries.csv')  ###Make into csv for memory purposes
+df5.to_csv('Cold_Inv_TimeSeries.csv')  ###Make into csv for memory purposes
 print(df5)
 
 fig, ax = plot.subplots()
-ax.set_ylim(1.8,2.3)
+ax.set_ylim(1.85,2.1)
 ws=df5['WS_ms_Avg'].groupby(df5['Hours from Start'])
 ax.plot(ws.mean(['WS_ms_Avg']))
+plot.title("Kineo WS_Avg Inv Start")
+plot.xlabel("hour")
+plot.ylabel("wind speed (m/s)")
 plot.show()
