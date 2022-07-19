@@ -32,12 +32,13 @@ filename2 = "member_dates_PET.csv"  # output filename for dates that meet the th
 ################################################################
 
 ### Open remote reanalysis dataset; coding follows Numpy convention (not pandas dataframes)
-fin0 = netcdf.Dataset('hgt.2016.nc', 'r')
-fin1 = netcdf.Dataset('hgt.2017.nc', 'r')
-fin2 = netcdf.Dataset('hgt.2018.nc', 'r')
-fin3 = netcdf.Dataset('hgt.2019.nc', 'r')
-fin4 = netcdf.Dataset('hgt.2020.nc', 'r')
-fin5 = netcdf.Dataset('hgt.2021.nc', 'r')
+fin0 = netcdf.Dataset('hgt.2013.nc', 'r')
+fin1 = netcdf.Dataset('hgt.2014.nc', 'r')
+fin2 = netcdf.Dataset('hgt.2015.nc', 'r')
+fin3 = netcdf.Dataset('hgt.2016.nc', 'r')
+fin4 = netcdf.Dataset('hgt.2017.nc', 'r')
+fin5 = netcdf.Dataset('hgt.2018.nc', 'r')
+fin6 = netcdf.Dataset('hgt.2019.nc', 'r')
 fin1.variables.keys()
 levels = fin1.variables['level'][:]
 lats = fin1.variables['lat'][:]
@@ -48,6 +49,7 @@ time2 = fin2.variables['time'][:]
 time3 = fin3.variables['time'][:]
 time4 = fin4.variables['time'][:]
 time5 = fin5.variables['time'][:]
+time6 = fin6.variables['time'][:]
 base = date(1800, 1, 1)  # reference date/time for netcdf file time variable
 timevar0 = pd.to_timedelta(time0, unit='h') + pd.Timestamp(base)
 timevar1 = pd.to_timedelta(time1, unit='h') + pd.Timestamp(base)
@@ -55,12 +57,14 @@ timevar2 = pd.to_timedelta(time2, unit='h') + pd.Timestamp(base)
 timevar3 = pd.to_timedelta(time3, unit='h') + pd.Timestamp(base)
 timevar4 = pd.to_timedelta(time4, unit='h') + pd.Timestamp(base)
 timevar5 = pd.to_timedelta(time5, unit='h') + pd.Timestamp(base)
+timevar6 = pd.to_timedelta(time6, unit='h') + pd.Timestamp(base)
 timevar0 = pd.DataFrame(timevar0, columns=['datetime'])
 timevar1 = pd.DataFrame(timevar1, columns=['datetime'])
 timevar2 = pd.DataFrame(timevar2, columns=['datetime'])
 timevar3 = pd.DataFrame(timevar3, columns=['datetime'])
 timevar4 = pd.DataFrame(timevar4, columns=['datetime'])
 timevar5 = pd.DataFrame(timevar5, columns=['datetime'])
+timevar6 = pd.DataFrame(timevar6, columns=['datetime'])
 lat_bnds, lon_bnds = [lat1, lat2], [lon1, lon2]
 # lat_bnds, lon_bnds = [39, 51], [282, 294]
 concat_NCEPdata = pd.DataFrame()
@@ -75,42 +79,51 @@ for i in [850]:
     hgt_subset3 = fin3.variables['hgt'][:, np.ndarray.item(level_ind[0]), lat_inds[:], lon_inds[:]]
     hgt_subset4 = fin4.variables['hgt'][:, np.ndarray.item(level_ind[0]), lat_inds[:], lon_inds[:]]
     hgt_subset5 = fin5.variables['hgt'][:, np.ndarray.item(level_ind[0]), lat_inds[:], lon_inds[:]]
+    hgt_subset6 = fin6.variables['hgt'][:, np.ndarray.item(level_ind[0]), lat_inds[:], lon_inds[:]]
     hgt_subset0 = hgt_subset0.data
     hgt_subset1 = hgt_subset1.data
     hgt_subset2 = hgt_subset2.data
     hgt_subset3 = hgt_subset3.data
     hgt_subset4 = hgt_subset4.data
     hgt_subset5 = hgt_subset5.data
+    hgt_subset6 = hgt_subset6.data
     t = hgt_subset1.shape[0]
     x = hgt_subset1.shape[1]
     y = hgt_subset1.shape[2]
     # print(t,x,y)
     # print(hgt_subset0[130][10][6])
-    hgt_subset2d0 = np.reshape(hgt_subset0, (t+4, x*y))  # Reshape array to 2D: Rows=date, Columns=gridpoint
+    hgt_subset2d0 = np.reshape(hgt_subset0, (t, x*y))  # Reshape array to 2D: Rows=date, Columns=gridpoint
     hgt_subset2d1 = np.reshape(hgt_subset1, (t, x*y))  #
     hgt_subset2d2 = np.reshape(hgt_subset2, (t, x*y))  #
-    hgt_subset2d3 = np.reshape(hgt_subset3, (t, x*y))  #
-    hgt_subset2d4 = np.reshape(hgt_subset4, (t+4, x*y))  # t+1 is for leap years
+    hgt_subset2d3 = np.reshape(hgt_subset3, (t+4, x*y))  #
+    hgt_subset2d4 = np.reshape(hgt_subset4, (t, x*y))  # t+1 is for leap years
     hgt_subset2d5 = np.reshape(hgt_subset5, (t, x*y))  #
+    hgt_subset2d6 = np.reshape(hgt_subset6, (t, x*y))  #
+
     hgt_subset2d0 = pd.DataFrame(hgt_subset2d0)  # convert numpy array to dataframe for concatonation with datetime var 'timevar'
     hgt_subset2d1 = pd.DataFrame(hgt_subset2d1)  #
     hgt_subset2d2 = pd.DataFrame(hgt_subset2d2)  #
     hgt_subset2d3 = pd.DataFrame(hgt_subset2d3)  #
     hgt_subset2d4 = pd.DataFrame(hgt_subset2d4)  #
     hgt_subset2d5 = pd.DataFrame(hgt_subset2d5)  #
+    hgt_subset2d6 = pd.DataFrame(hgt_subset2d6)  #
+
     hgt_subset2Dt0 = pd.concat([timevar0, hgt_subset2d0], axis=1)  # concatonate time variable and gridpoint dataframes
     hgt_subset2Dt1 = pd.concat([timevar1, hgt_subset2d1], axis=1)  #
     hgt_subset2Dt2 = pd.concat([timevar2, hgt_subset2d2], axis=1)  #
     hgt_subset2Dt3 = pd.concat([timevar3, hgt_subset2d3], axis=1)  #
     hgt_subset2Dt4 = pd.concat([timevar4, hgt_subset2d4], axis=1)  #
     hgt_subset2Dt5 = pd.concat([timevar5, hgt_subset2d5], axis=1)  #
-    hgt_subset2Dt0 = hgt_subset2Dt0.set_index(
-        pd.DatetimeIndex(hgt_subset2Dt0['datetime']))  # set index to be datetime format
+    hgt_subset2Dt6 = pd.concat([timevar6, hgt_subset2d6], axis=1)  #
+
+    hgt_subset2Dt0 = hgt_subset2Dt0.set_index(pd.DatetimeIndex(hgt_subset2Dt0['datetime']))  # set index to be datetime format
     hgt_subset2Dt1 = hgt_subset2Dt1.set_index(pd.DatetimeIndex(hgt_subset2Dt1['datetime']))  #
     hgt_subset2Dt2 = hgt_subset2Dt2.set_index(pd.DatetimeIndex(hgt_subset2Dt2['datetime']))  #
     hgt_subset2Dt3 = hgt_subset2Dt3.set_index(pd.DatetimeIndex(hgt_subset2Dt3['datetime']))  #
     hgt_subset2Dt4 = hgt_subset2Dt4.set_index(pd.DatetimeIndex(hgt_subset2Dt4['datetime']))  #
     hgt_subset2Dt5 = hgt_subset2Dt5.set_index(pd.DatetimeIndex(hgt_subset2Dt5['datetime']))  #
+    hgt_subset2Dt6 = hgt_subset2Dt6.set_index(pd.DatetimeIndex(hgt_subset2Dt6['datetime']))  #
+
     if k == 0:
         concat_NCEPdata = pd.concat(
             [hgt_subset2Dt0, hgt_subset2Dt1, hgt_subset2Dt2, hgt_subset2Dt3, hgt_subset2Dt4, hgt_subset2Dt5],
@@ -123,19 +136,36 @@ for i in [850]:
     k = k + 1
 
 
-# concat_NCEPdata = concat_NCEPdata.drop(['datetime'], axis=1)  # drop the redundant datetime column
-# # rename columns to eliminate repeated column names
-# noclmns = len(lat_inds) * len(lon_inds)
-# concat_NCEPdata.columns = range(noclmns)
-# #  Calculate gridpoint deviations (to remove seasonality of geopotential height values)
-# ### Calculate centered 13-day average for each day for each gridpoint
-# smooth_NCEPdata = pd.DataFrame()
-# for i in concat_NCEPdata[:]:
-#     smooth_NCEPdata[i] = concat_NCEPdata.iloc[:, i].rolling(window=13, center=True).mean()
-# ### Calculate deviations of daily data from the 13-day running average
-# dev_NCEPdata = concat_NCEPdata - smooth_NCEPdata
-# dev_NCEPdata = dev_NCEPdata.loc[
-#     (dev_NCEPdata.index.month >= mon1) & (dev_NCEPdata.index.month <= mon2)]  # isolate growing season
+concat_NCEPdata = concat_NCEPdata.drop(['datetime'], axis=1)  # drop the redundant datetime column
+# rename columns to eliminate repeated column names
+noclmns = len(lat_inds) * len(lon_inds)
+concat_NCEPdata.columns = range(noclmns)
+#  Calculate gridpoint deviations (to remove seasonality of geopotential height values)
+### Calculate centered 13-day average for each day for each gridpoint
+smooth_NCEPdata = pd.DataFrame()
+for i in concat_NCEPdata[:]:
+    smooth_NCEPdata[i] = concat_NCEPdata.iloc[:, i].rolling(window=13, center=True).mean()
+### Calculate deviations of daily data from the 13-day running average
+dev_NCEPdata = concat_NCEPdata - smooth_NCEPdata
+dev_NCEPdata = dev_NCEPdata.loc[(dev_NCEPdata.index.month <= 4) | (dev_NCEPdata.index.month >= 11)] # isolate cold season
+dev_NCEPdata = dev_NCEPdata.loc['11/5/2013 05:00':'11/6/2019 21:00']  # isolate growing season
+dev_NCEPdata = dev_NCEPdata.reset_index()
+
+# print(dev_NCEPdata)
+
+inv_start=pd.read_csv('csv/cold_Season_invLen_start times only.csv')
+inv_start=inv_start.rename({'Date':'datetime'}, axis=1)
+inv_start['datetime'] = pd.to_datetime(inv_start['datetime'])
+inv_start['inv_time'] = inv_start['datetime'].dt.time
+inv_start['inv_date'] = inv_start['datetime'].dt.date
+dev_NCEPdata['datetime'] = pd.to_datetime(dev_NCEPdata['datetime'])
+dev_NCEPdata['hgt_time'] = dev_NCEPdata['datetime'].dt.time
+dev_NCEPdata['hgt_date'] = dev_NCEPdata['datetime'].dt.date
+# Sort the two dataframes by the new key, as required by merge_asof function
+inv_start.sort_values(by="datetime", inplace=True, ignore_index=True)
+dev_NCEPdata.sort_values(by="datetime", inplace=True, ignore_index=True)
+result_df=pd.merge_asof(inv_start, dev_NCEPdata, on="datetime", direction="nearest")
+print(result_df)
 
 # # normalizeyn = input("Do you want to normalize the gridpoint residuals? (yes/no):\n")
 # # if normalizeyn == "yes":

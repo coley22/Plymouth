@@ -53,6 +53,7 @@ for i in range(0, len(a)):  # running through the entire data set
             inversion = False
     #to this point, the entire data set has invLen and start/end, NOT +-6hours
 
+
 df['Date'] = pd.to_datetime(df['Date'])
 df['Month'] = df['Date'].dt.month
 df.to_csv('df.csv')
