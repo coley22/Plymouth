@@ -91,14 +91,15 @@ df5.drop(df5.index[df5['Month']==8], inplace=True)
 df5.drop(df5.index[df5['Month']==9], inplace=True)
 df5.drop(df5.index[df5['Month']==10], inplace=True)
 
-df5.to_csv('Cold_Inv_TimeSeries.csv')  ###Make into csv for memory purposes
+# df5.to_csv('Cold_Inv_TimeSeries.csv')  ###Make into csv for memory purposes
 print(df5)
 
 fig, ax = plot.subplots()
-ax.set_ylim(1.85,2.1)
-ws=df5['WS_ms_Avg'].groupby(df5['Hours from Start'])
-ax.plot(ws.mean(['WS_ms_Avg']))
-plot.title("Kineo WS_Avg Inv Start")
+ax.set_ylim(4.75,5.35)
+ws=df5['WS_ms_Max'].groupby(df5['Hours from Start'])
+ax.plot(ws.mean(['WS_ms_Max']))
+plot.title("Kineo WS_Avg Inv Max")
 plot.xlabel("hour")
 plot.ylabel("wind speed (m/s)")
 plot.show()
+
