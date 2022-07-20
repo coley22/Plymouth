@@ -1,0 +1,61 @@
+2022/07/20 14:21:19 Starting OSGeo4W install, version 2.579
+2022/07/20 14:21:19 using locales .1252
+2022/07/20 14:21:19 io_stream_cygfile: fopen(/etc/setup/setup.rc) failed 2 No such file or directory
+2022/07/20 14:21:19 Current Directory: C:\Users\jacks\AppData\Local\Temp
+2022/07/20 14:21:19 Root Directory: C:\OSGeo4W
+Could not open Service control manager
+2022/07/20 14:21:25 source: network install
+2022/07/20 14:22:11 root: C:\Users\jacks\PycharmProjects\Plymouth
+2022/07/20 14:22:13 Selected local directory: C:\Users\jacks\AppData\Local\Temp
+2022/07/20 14:22:13 Menu name: OSGeo4W
+2022/07/20 14:22:14 net: Preconfig
+Cached mirror list unavailable
+get_url_to_membuf https://download.osgeo.org/osgeo4w/ssl/mirrors.lst
+getUrlToStream https://download.osgeo.org/osgeo4w/ssl/mirrors.lst
+User-Agent: default is "OSGeo4W-Setup/2.579 (Windows NT 6.2.9200;Win64;0409)"
+2022/07/20 14:22:24 site: https://download.osgeo.org/osgeo4w/v2/
+get_url_to_membuf https://download.osgeo.org/osgeo4w/v2/x86_64/setup.ini.bz2
+getUrlToStream https://download.osgeo.org/osgeo4w/v2/x86_64/setup.ini.bz2
+2022/07/20 14:22:25 io_stream_cygfile: fopen(/etc/setup/installed.db) failed 2 No such file or directory
+ The package <gdal-dev-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-devel-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-devel-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-ecw-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-ecw-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-filegdb-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-filegdb-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-hana-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-hana-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-hdf5-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-hdf5-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-kea-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-kea-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-mrsid-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-mrsid-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-mss-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-mss-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-oracle-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-oracle-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-sosi-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-sosi-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev-tiledb-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev-tiledb-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-dev306-runtime-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <gdal-dev306-runtime-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <gdal-ecw-3.5.1-2> has a non-free license it was successfully added 
+ The package <gdal-ecw-3.5.1-1> has a non-free license it was successfully added 
+ The package <gdal-filegdb-3.5.1-2> has a non-free license it was successfully added 
+ The package <gdal-filegdb-3.5.1-1> has a non-free license it was successfully added 
+ The package <gdal-mrsid-3.5.1-2> has a non-free license it was successfully added 
+ The package <gdal-mrsid-3.5.1-1> has a non-free license it was successfully added 
+ The package <oci-19.11-1> has a non-free license it was successfully added 
+ The package <oci-19.8-1> has a non-free license it was successfully added 
+ The package <oci-devel-19.11-1> has a non-free license it was successfully added 
+ The package <oci-devel-19.8-1> has a non-free license it was successfully added 
+ The package <python3-gdal-dev-3.6.0-69-3a5039aa47-1> has a non-free license it was successfully added 
+ The package <python3-gdal-dev-3.6.0-68-158f473911-1> has a non-free license it was successfully added 
+ The package <szip-2.1.1-3> has a non-free license it was successfully added 
+ The package <szip-devel-2.1.1-3> has a non-free license it was successfully added 
+2022/07/20 14:22:25 io_stream_cygfile: fopen(/etc/setup/timestamp) failed 2 No such file or directory
+2022/07/20 14:22:41 Ending OSGeo4W install

@@ -13,10 +13,10 @@ from datetime import date
 
 #################### USER DEFINED VARIABLES ####################
 ### Define spatial domain of EOF analysis (in increments of 2.5 deg by 2.5 deg)
-lat1 = 32.5;
-lat2 = 57.5  # domain for 2022 manuscript: 32.5-57.5, 275.0-300.0
-lon1 = 275.0;
-lon2 = 300.0
+lat1 = 30
+lat2 = 60  # domain for 2022 manuscript: 32.5-57.5, 275.0-300.0
+lon1 = 272.5
+lon2 = 302.5
 ### Months to include (must be contiguous); inclusive
 mon1 = 6
 mon2 = 9
@@ -32,13 +32,13 @@ filename2 = "member_dates_PET.csv"  # output filename for dates that meet the th
 ################################################################
 
 ### Open remote reanalysis dataset; coding follows Numpy convention (not pandas dataframes)
-fin0 = netcdf.Dataset('hgt.2013.nc', 'r')
-fin1 = netcdf.Dataset('hgt.2014.nc', 'r')
-fin2 = netcdf.Dataset('hgt.2015.nc', 'r')
-fin3 = netcdf.Dataset('hgt.2016.nc', 'r')
-fin4 = netcdf.Dataset('hgt.2017.nc', 'r')
-fin5 = netcdf.Dataset('hgt.2018.nc', 'r')
-fin6 = netcdf.Dataset('hgt.2019.nc', 'r')
+fin0 = netcdf.Dataset('height files/hgt.2013.nc', 'r')
+fin1 = netcdf.Dataset('height files/hgt.2014.nc', 'r')
+fin2 = netcdf.Dataset('height files/hgt.2015.nc', 'r')
+fin3 = netcdf.Dataset('height files/hgt.2016.nc', 'r')
+fin4 = netcdf.Dataset('height files/hgt.2017.nc', 'r')
+fin5 = netcdf.Dataset('height files/hgt.2018.nc', 'r')
+fin6 = netcdf.Dataset('height files/hgt.2019.nc', 'r')
 fin1.variables.keys()
 levels = fin1.variables['level'][:]
 lats = fin1.variables['lat'][:]
@@ -126,11 +126,11 @@ for i in [850]:
 
     if k == 0:
         concat_NCEPdata = pd.concat(
-            [hgt_subset2Dt0, hgt_subset2Dt1, hgt_subset2Dt2, hgt_subset2Dt3, hgt_subset2Dt4, hgt_subset2Dt5],
+            [hgt_subset2Dt0, hgt_subset2Dt1, hgt_subset2Dt2, hgt_subset2Dt3, hgt_subset2Dt4, hgt_subset2Dt5, hgt_subset2Dt6],
             axis=0)  # Concatonate all years of NCEP-NCAR reanalysis data
     elif k >= 1:
         subset_all = pd.concat(
-            [hgt_subset2Dt0, hgt_subset2Dt1, hgt_subset2Dt2, hgt_subset2Dt3, hgt_subset2Dt4, hgt_subset2Dt5],
+            [hgt_subset2Dt0, hgt_subset2Dt1, hgt_subset2Dt2, hgt_subset2Dt3, hgt_subset2Dt4, hgt_subset2Dt5, hgt_subset2Dt6],
             axis=0)  # concatontate each additional pressure level of heights
         concat_NCEPdata = pd.concat([concat_NCEPdata, subset_all], axis=1)
     k = k + 1
@@ -165,7 +165,56 @@ dev_NCEPdata['hgt_date'] = dev_NCEPdata['datetime'].dt.date
 inv_start.sort_values(by="datetime", inplace=True, ignore_index=True)
 dev_NCEPdata.sort_values(by="datetime", inplace=True, ignore_index=True)
 result_df=pd.merge_asof(inv_start, dev_NCEPdata, on="datetime", direction="nearest")
-print(result_df)
+# make a final NCEP csv that has datetime (from height data at time closest to inv end times) and dev_NCEP data
+
+final_NCEPdata=pd.DataFrame()
+final_NCEPdata=result_df
+final_NCEPdata['Datetime']=result_df['hgt_date'].astype(str)+' '+result_df['hgt_time'].astype(str)
+final_NCEPdata=final_NCEPdata.drop(final_NCEPdata.columns[[0,1,2,3,173,174]], axis=1)
+final_NCEPdata=final_NCEPdata.set_index(final_NCEPdata['Datetime'])     # set datetime column as index
+final_NCEPdata=final_NCEPdata.drop(['Datetime'], axis=1)
+# final_NCEPdata.to_csv('csv/NCEPdata.csv')
+print(final_NCEPdata)
+
+average_array=final_NCEPdata.mean()
+print("asd", max(average_array), min(average_array))
+average_array=average_array.to_numpy()
+average_array=average_array.reshape([13,13])
+print(average_array)
+aa_df=pd.DataFrame(average_array)
+print(aa_df)
+aa_df.to_csv('csv/class_.csv')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # # normalizeyn = input("Do you want to normalize the gridpoint residuals? (yes/no):\n")
 # # if normalizeyn == "yes":
