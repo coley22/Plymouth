@@ -96,16 +96,16 @@ import matplotlib.pyplot as plot
 
 
 # altering the dataframe to grab the data we want, =>6 hour inversions during the cold season
-df=pd.read_csv('csv/hours_with_inversion_master2.csv')
-df.drop(df.index[df['Month']==5], inplace=True)
-df.drop(df.index[df['Month']==6], inplace=True)
-df.drop(df.index[df['Month']==7], inplace=True)
-df.drop(df.index[df['Month']==8], inplace=True)
-df.drop(df.index[df['Month']==9], inplace=True)
-df.drop(df.index[df['Month']==10], inplace=True)
-df.drop(df.index[df['invLen']<6], inplace=True)
-df.drop(df.index[df['slope']<0], inplace=True)
-df2=pd.concat([df['Date']], axis=1)
-df2.to_csv('csv/cold_Season_invLen_start times only.csv')
-print(df2)
+# df=pd.read_csv('csv/hours_with_inversion_master2.csv')
+# df.drop(df.index[df['Month']==5], inplace=True)
+# df.drop(df.index[df['Month']==6], inplace=True)
+# df.drop(df.index[df['Month']==7], inplace=True)
+# df.drop(df.index[df['Month']==8], inplace=True)
+# df.drop(df.index[df['Month']==9], inplace=True)
+# df.drop(df.index[df['Month']==10], inplace=True)
+# df.drop(df.index[df['invLen']<6], inplace=True)
+# df.drop(df.index[df['slope']<0], inplace=True)
+# df2=pd.concat([df['Date']], axis=1)
+# df2.to_csv('csv/cold_Season_invLen_start times only.csv')
+# print(df2)
 
